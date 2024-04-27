@@ -19,3 +19,22 @@
 4. Экспортировать ключи в CryptoPro CSP "Сертификаты > Личное > {Выбрать нужный сертификат}" > Экспортировать ключи
    (в формате .PFX, с цепочкой сертификатов)
 5. Указать в `src/main/resources/gost-tls-client.properties` правильный путь к `.pfx`, указанный ранее пароль и `url` для вызова в УЦ
+
+## Отладка
+Иногда не получается подключиться к УЦ, возможные причины:
+1. Сертификаты зашифрованы другим алгоритмом
+2. Несовместимость версий CryptoPro JCSP и CSP
+3. Несовместимость версий CryptoPro JCSP и JVM
+4. `JCP` добавляется в Security Providers до `JCSP`
+5. Параметр `com.sun.security.enableCRLDP` в состоянии `false`
+
+Чтобы упростить отладку, рекомендую зайти в один из файлов JRE, отвечающий за логирование
+и выставить значение `ALL` для логгеров при помощи команды.
+```shell
+echo \
+"java.util.logging.ConsoleHandler.level=ALL
+ru.CryptoPro.JCP.tools.JCPLogger.level=ALL
+ru.CryptoPro.JCSP.JCSPLogger.level=ALL
+ru.CryptoPro.JCSP.CAPILogger.level=ALL" \
+>> $JAVA_HOME/conf/logging.properties
+```
