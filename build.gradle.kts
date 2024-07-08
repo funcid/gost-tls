@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
 	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+	implementation(fileTree(mapOf("dir" to "libs/dependencies", "include" to listOf("*.jar"))))
 	testImplementation(kotlin("test"))
 }
 
